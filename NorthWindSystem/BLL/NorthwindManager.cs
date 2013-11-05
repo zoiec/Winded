@@ -11,13 +11,23 @@ namespace NorthWindSystem.BLL
     [DataObject]
     public class NorthwindManager
     {
+        private NorthwindExtendedEntities DbContext { get; set; }
+
+        public NorthwindManager()
+        {
+            DbContext = new NorthwindExtendedEntities();
+        }
+
         [DataObjectMethod(DataObjectMethodType.Select, true)]
         public List<Customer> GetCustomers()
         {
-            NorthwindExtendedEntities dal = new NorthwindExtendedEntities();
-            return dal.Customers.ToList<Customer>();
+            return DbContext.Customers.ToList<Customer>();
         }
 
-
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<Employee> GetEmployees()
+        {
+            return DbContext.Employees.ToList<Employee>();
+        }
     }
 }
