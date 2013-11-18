@@ -13,7 +13,7 @@ namespace NorthwindSystem.DataModels.HumanResources
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NorthwindHumanResources : DbContext
+    internal partial class NorthwindHumanResources : DbContext
     {
         public NorthwindHumanResources()
             : base("name=NorthwindHumanResources")

@@ -254,7 +254,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NorthwindModel.Sales" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="NorthwindSales" p1:LazyLoadingEnabled="true">
+        <EntityContainer Name="NorthwindSales" p1:LazyLoadingEnabled="true" a:TypeAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <EntitySet Name="CustomerDemographics" EntityType="NorthwindModel.Sales.CustomerDemographic" />
           <EntitySet Name="Customers" EntityType="NorthwindModel.Sales.Customer" />
           <EntitySet Name="Employees" EntityType="NorthwindModel.Sales.Employee" />

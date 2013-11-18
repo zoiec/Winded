@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="6fe0e0bee15f4ab4a9407edeb0da9cee" Name="Diagram1">
         <EntityTypeShape EntityType="NorthwindModel.HumanResources.Employee" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="NorthwindModel.HumanResources.Region" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NorthwindModel.HumanResources.Territory" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthwindModel.HumanResources.Region" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NorthwindModel.HumanResources.Territory" Width="1.5" PointX="2.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="NorthwindModel.HumanResources.FK_Employees_Employees" ManuallyRouted="false" />
         <AssociationConnector Association="NorthwindModel.HumanResources.FK_Territories_Region" ManuallyRouted="false" />
         <AssociationConnector Association="NorthwindModel.HumanResources.EmployeeTerritories" ManuallyRouted="false" />

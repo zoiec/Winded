@@ -13,7 +13,7 @@ namespace NorthwindSystem.DataModels.Sales
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NorthwindSales : DbContext
+    internal partial class NorthwindSales : DbContext
     {
         public NorthwindSales()
             : base("name=NorthwindSales")

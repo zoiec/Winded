@@ -26,7 +26,6 @@ public partial class _Default : Page
                 int offset = 78; // For Northwind images only - legacy of the OLE image format
                 memStream.Write(bytes, offset, bytes.Length - offset);
                 img = string.Format(img, Convert.ToBase64String(memStream.ToArray()));
-
             }
         }
         else
@@ -36,35 +35,36 @@ public partial class _Default : Page
         return img;
     }
 
-    //private List<Sales.Order> _Orders = null;
-    //private List<Sales.Order> Orders
-    //{
-    //    get
-    //    {
-    //        if (_Orders == null)
-    //        {
-    //            var controller = new NorthwindManager();
-    //            _Orders = controller.GetOrders();
-    //        }
-    //        return _Orders;
-    //    }
-    //}
+    private List<Sales.Order> _Orders = null;
+    private List<Sales.Order> Orders
+    {
+        get
+        {
+            if (_Orders == null)
+            {
+                var controller = new NorthwindManager();
+                _Orders = controller.GetOrders();
+            }
+            return _Orders;
+        }
+    }
     public string EmployeePerformance(object employeeId)
     {
-        return new NorthwindManager().EmployeePerformance(employeeId as int?);
-        //string review;
-        //int? empId = employeeId as int?;
-        //var shortList = Orders.Where(item => item.EmployeeID == empId).ToList();
-        //if (shortList.Count > 0)
-        //{
-        //    int distinctCustomers = (from item in shortList
-        //                             select item.CustomerID).Distinct().ToList().Count;
-        //    review = string.Format("{0} sales for {1} customers.", shortList.Count, distinctCustomers);
-        //}
-        //else
-        //{
-        //    review = "No direct customer sales";
-        //}
-        //return review;
+        // Alternatively, push this logic to the BLL
+        // return new NorthwindManager().EmployeePerformance(employeeId as int?);
+        string review;
+        int? empId = employeeId as int?;
+        var shortList = Orders.Where(item => item.EmployeeID == empId).ToList();
+        if (shortList.Count > 0)
+        {
+            int distinctCustomers = (from item in shortList
+                                     select item.CustomerID).Distinct().ToList().Count;
+            review = string.Format("{0} sales for {1} customers.", shortList.Count, distinctCustomers);
+        }
+        else
+        {
+            review = "No direct customer sales";
+        }
+        return review;
     }
 }
