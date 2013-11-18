@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.Sales
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NorthwindExtendedEntities : DbContext
+    public partial class NorthwindSales : DbContext
     {
-        public NorthwindExtendedEntities()
-            : base("name=NorthwindExtendedEntities")
+        public NorthwindSales()
+            : base("name=NorthwindSales")
         {
         }
     
@@ -32,11 +32,6 @@ namespace NorthWindSystem.DAL
         public DbSet<Order_Detail> Order_Details { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Region> Regions { get; set; }
         public DbSet<Shipper> Shippers { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Territory> Territories { get; set; }
-        public DbSet<Version> Versions { get; set; }
-        public DbSet<VersionDDLEventLog> VersionDDLEventLogs { get; set; }
     }
 }

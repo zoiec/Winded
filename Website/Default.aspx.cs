@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using NorthWindSystem.BLL;
+using Sales = NorthWindSystem.DataModels.Sales;
 
 public partial class _Default : Page
 {
@@ -32,5 +34,37 @@ public partial class _Default : Page
             img = "";
         }
         return img;
+    }
+
+    //private List<Sales.Order> _Orders = null;
+    //private List<Sales.Order> Orders
+    //{
+    //    get
+    //    {
+    //        if (_Orders == null)
+    //        {
+    //            var controller = new NorthwindManager();
+    //            _Orders = controller.GetOrders();
+    //        }
+    //        return _Orders;
+    //    }
+    //}
+    public string EmployeePerformance(object employeeId)
+    {
+        return new NorthwindManager().EmployeePerformance(employeeId as int?);
+        //string review;
+        //int? empId = employeeId as int?;
+        //var shortList = Orders.Where(item => item.EmployeeID == empId).ToList();
+        //if (shortList.Count > 0)
+        //{
+        //    int distinctCustomers = (from item in shortList
+        //                             select item.CustomerID).Distinct().ToList().Count;
+        //    review = string.Format("{0} sales for {1} customers.", shortList.Count, distinctCustomers);
+        //}
+        //else
+        //{
+        //    review = "No direct customer sales";
+        //}
+        //return review;
     }
 }

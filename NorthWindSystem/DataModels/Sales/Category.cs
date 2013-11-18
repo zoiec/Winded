@@ -7,21 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.Sales
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerDemographic
+    public partial class Category
     {
-        public CustomerDemographic()
+        public Category()
         {
-            this.Customers = new HashSet<Customer>();
+            this.Products = new HashSet<Product>();
         }
     
-        public string CustomerTypeID { get; set; }
-        public string CustomerDesc { get; set; }
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
+        public string Description { get; set; }
+        public byte[] Picture { get; set; }
     
-        public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

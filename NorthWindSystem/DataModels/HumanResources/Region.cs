@@ -7,20 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.HumanResources
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Order_Detail
+    public partial class Region
     {
-        public int OrderID { get; set; }
-        public int ProductID { get; set; }
-        public decimal UnitPrice { get; set; }
-        public short Quantity { get; set; }
-        public float Discount { get; set; }
+        public Region()
+        {
+            this.Territories = new HashSet<Territory>();
+        }
     
-        public virtual Order Order { get; set; }
-        public virtual Product Product { get; set; }
+        public int RegionID { get; set; }
+        public string RegionDescription { get; set; }
+    
+        public virtual ICollection<Territory> Territories { get; set; }
     }
 }

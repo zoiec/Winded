@@ -7,18 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.Sales
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Version
+    public partial class CustomerDemographic
     {
-        public short Major { get; set; }
-        public short Minor { get; set; }
-        public short Maintenance { get; set; }
-        public int Build { get; set; }
-        public System.DateTime VersionDate { get; set; }
-        public System.DateTime ModifiedDate { get; set; }
+        public CustomerDemographic()
+        {
+            this.Customers = new HashSet<Customer>();
+        }
+    
+        public string CustomerTypeID { get; set; }
+        public string CustomerDesc { get; set; }
+    
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

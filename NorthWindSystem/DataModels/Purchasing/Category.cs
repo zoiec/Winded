@@ -7,21 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.Purchasing
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Region
+    public partial class Category
     {
-        public Region()
+        public Category()
         {
-            this.Territories = new HashSet<Territory>();
+            this.Products = new HashSet<Product>();
         }
     
-        public int RegionID { get; set; }
-        public string RegionDescription { get; set; }
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
+        public string Description { get; set; }
+        public byte[] Picture { get; set; }
     
-        public virtual ICollection<Territory> Territories { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

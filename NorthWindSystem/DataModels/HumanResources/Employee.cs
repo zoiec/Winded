@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.HumanResources
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,6 @@ namespace NorthWindSystem.DAL
         public Employee()
         {
             this.Employees1 = new HashSet<Employee>();
-            this.Orders = new HashSet<Order>();
             this.Territories = new HashSet<Territory>();
         }
     
@@ -42,7 +41,6 @@ namespace NorthWindSystem.DAL
     
         public virtual ICollection<Employee> Employees1 { get; set; }
         public virtual Employee Employee1 { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Territory> Territories { get; set; }
     }
 }

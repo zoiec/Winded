@@ -27,6 +27,8 @@
                         <asp:Label ID="Label1" runat="server" Text='<%# Bind("LastName") %>'></asp:Label>
                         &mdash;
                         <asp:Label ID="Label8" runat="server" Text='<%# Bind("Title") %>'></asp:Label>
+                        <br />
+                        <asp:Label ID="Label9" runat="server" Text='<%# EmployeePerformance(Eval("EmployeeID")) %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Address" SortExpression="City">

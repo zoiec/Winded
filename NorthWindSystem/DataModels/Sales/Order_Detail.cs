@@ -7,23 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.Sales
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class Order_Detail
     {
-        public Category()
-        {
-            this.Products = new HashSet<Product>();
-        }
+        public int OrderID { get; set; }
+        public int ProductID { get; set; }
+        public decimal UnitPrice { get; set; }
+        public short Quantity { get; set; }
+        public float Discount { get; set; }
     
-        public int CategoryID { get; set; }
-        public string CategoryName { get; set; }
-        public string Description { get; set; }
-        public byte[] Picture { get; set; }
-    
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

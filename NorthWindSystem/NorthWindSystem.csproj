@@ -47,87 +47,158 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\NorthwindManager.cs" />
-    <Compile Include="DAL\Category.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\HumanResources\Employee.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Customer.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\CustomerDemographic.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Employee.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\NorthWindModel.Context.cs">
+    <Compile Include="DataModels\HumanResources\NorthwindModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NorthWindModel.Context.tt</DependentUpon>
+      <DependentUpon>NorthwindModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\NorthWindModel.cs">
+    <Compile Include="DataModels\HumanResources\NorthwindModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\NorthWindModel.Designer.cs">
+    <Compile Include="DataModels\HumanResources\NorthwindModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NorthWindModel.edmx</DependentUpon>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Order.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\HumanResources\Region.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Order_Detail.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\HumanResources\Territory.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Product.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\Purchasing\Category.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Region.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\Purchasing\NorthwindModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NorthwindModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Shipper.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\Purchasing\NorthwindModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Supplier.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\Purchasing\NorthwindModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Territory.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\Purchasing\Product.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Version.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\Purchasing\Supplier.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\VersionDDLEventLog.cs">
-      <DependentUpon>NorthWindModel.tt</DependentUpon>
+    <Compile Include="DataModels\Sales\Category.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\Customer.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\CustomerDemographic.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\Employee.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\NorthwindModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NorthwindModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\NorthwindModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\NorthwindModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\Order.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\Order_Detail.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\Product.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModels\Sales\Shipper.cs">
+      <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DAL\NorthWindModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>NorthWindModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="DAL\NorthWindModel.Context.tt">
+    <EntityDeploy Include="DataModels\HumanResources\NorthwindModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NorthwindModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataModels\HumanResources\NorthwindModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>NorthWindModel.edmx</DependentUpon>
-      <LastGenOutput>NorthWindModel.Context.cs</LastGenOutput>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+      <LastGenOutput>NorthwindModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="DAL\NorthWindModel.edmx.diagram">
-      <DependentUpon>NorthWindModel.edmx</DependentUpon>
+    <None Include="DataModels\HumanResources\NorthwindModel.edmx.diagram">
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
     </None>
-    <None Include="DAL\NorthWindModel.tt">
+    <None Include="DataModels\HumanResources\NorthwindModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>NorthWindModel.edmx</DependentUpon>
-      <LastGenOutput>NorthWindModel.cs</LastGenOutput>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+      <LastGenOutput>NorthwindModel.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="DataModels\Purchasing\NorthwindModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NorthwindModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataModels\Purchasing\NorthwindModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+      <LastGenOutput>NorthwindModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataModels\Purchasing\NorthwindModel.edmx.diagram">
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+    </None>
+    <None Include="DataModels\Purchasing\NorthwindModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+      <LastGenOutput>NorthwindModel.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="DataModels\Sales\NorthwindModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NorthwindModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataModels\Sales\NorthwindModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+      <LastGenOutput>NorthwindModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataModels\Sales\NorthwindModel.edmx.diagram">
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+    </None>
+    <None Include="DataModels\Sales\NorthwindModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NorthwindModel.edmx</DependentUpon>
+      <LastGenOutput>NorthwindModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\NorthWindSystem.DataModels.HumanResources.NorthwindHumanResources.datasource" />
+    <None Include="Properties\DataSources\NorthWindSystem.DataModels.Purchasing.NorthwindPurchasing.datasource" />
+    <None Include="Properties\DataSources\NorthWindSystem.DataModels.Sales.NorthwindSales.datasource" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DAL\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

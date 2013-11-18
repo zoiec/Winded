@@ -2,32 +2,52 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Data.Entity; // For use of .Include() extension method
 using System.Text;
 using System.Threading.Tasks;
-using NorthWindSystem.DAL;
 
 namespace NorthWindSystem.BLL
 {
     [DataObject]
     public class NorthwindManager
     {
-        private NorthwindExtendedEntities DbContext { get; set; }
-
-        public NorthwindManager()
-        {
-            DbContext = new NorthwindExtendedEntities();
-        }
 
         [DataObjectMethod(DataObjectMethodType.Select, true)]
-        public List<Customer> GetCustomers()
+        public List<NorthWindSystem.DataModels.Sales.Customer> GetCustomers()
         {
-            return DbContext.Customers.ToList<Customer>();
+            var dbContext = new NorthWindSystem.DataModels.Sales.NorthwindSales();
+            return dbContext.Customers.ToList();
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<Employee> GetEmployees()
+        public List<NorthWindSystem.DataModels.HumanResources.Employee> GetEmployees()
         {
-            return DbContext.Employees.ToList<Employee>();
+            var dbContext = new NorthWindSystem.DataModels.HumanResources.NorthwindHumanResources();
+            List<NorthWindSystem.DataModels.HumanResources.Employee> employees = dbContext.Employees.ToList();
+            return employees;
+        }
+
+        public List<DataModels.Sales.Order> GetOrders()
+        {
+            var dbContext = new NorthWindSystem.DataModels.Sales.NorthwindSales();
+            return dbContext.Orders.ToList();
+        }
+
+        public string EmployeePerformance(int? empId)
+        {
+            string review;
+            var shortList = GetOrders().Where(item => item.EmployeeID == empId).ToList();
+            if (shortList.Count > 0)
+            {
+                int distinctCustomers = (from item in shortList
+                                         select item.CustomerID).Distinct().ToList().Count;
+                review = string.Format("{0} sales for {1} customers.", shortList.Count, distinctCustomers);
+            }
+            else
+            {
+                review = "No direct customer sales";
+            }
+            return review;
         }
     }
 }

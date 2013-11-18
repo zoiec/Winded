@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NorthWindSystem.DAL
+namespace NorthWindSystem.DataModels.Sales
 {
     using System;
     using System.Collections.Generic;
@@ -32,6 +32,5 @@ namespace NorthWindSystem.DAL
     
         public virtual Category Category { get; set; }
         public virtual ICollection<Order_Detail> Order_Details { get; set; }
-        public virtual Supplier Supplier { get; set; }
     }
 }
