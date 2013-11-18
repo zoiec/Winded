@@ -13,23 +13,23 @@ namespace NorthWindSystem.BLL
     {
 
         [DataObjectMethod(DataObjectMethodType.Select, true)]
-        public List<NorthWindSystem.DataModels.Sales.Customer> GetCustomers()
+        public List<NorthwindSystem.DataModels.Sales.Customer> GetCustomers()
         {
-            var dbContext = new NorthWindSystem.DataModels.Sales.NorthwindSales();
+            var dbContext = new NorthwindSystem.DataModels.Sales.NorthwindSales();
             return dbContext.Customers.ToList();
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<NorthWindSystem.DataModels.HumanResources.Employee> GetEmployees()
+        public List<NorthwindSystem.DataModels.HumanResources.Employee> GetEmployees()
         {
-            var dbContext = new NorthWindSystem.DataModels.HumanResources.NorthwindHumanResources();
-            List<NorthWindSystem.DataModels.HumanResources.Employee> employees = dbContext.Employees.ToList();
+            var dbContext = new NorthwindSystem.DataModels.HumanResources.NorthwindHumanResources();
+            List<NorthwindSystem.DataModels.HumanResources.Employee> employees = dbContext.Employees.ToList();
             return employees;
         }
 
-        public List<DataModels.Sales.Order> GetOrders()
+        public List<NorthwindSystem.DataModels.Sales.Order> GetOrders()
         {
-            var dbContext = new NorthWindSystem.DataModels.Sales.NorthwindSales();
+            var dbContext = new NorthwindSystem.DataModels.Sales.NorthwindSales();
             return dbContext.Orders.ToList();
         }
 

@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NorthWindSystem.BLL;
-using Sales = NorthWindSystem.DataModels.Sales;
+using Sales = NorthwindSystem.DataModels.Sales;
 
 public partial class _Default : Page
 {
