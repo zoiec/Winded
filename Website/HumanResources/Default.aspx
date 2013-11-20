@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+    <style type="text/css">
+        table.zeroMarginTop
+        {
+            margin-top: 0px;
+        }
+    </style>
+</asp:Content>
+
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -42,7 +51,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Territories">
                     <ItemTemplate>
-                        <asp:GridView ID="Orders" runat="server" AutoGenerateColumns="false" DataSource='<%# Eval("Territories") %>'>
+                        <asp:GridView ID="Orders" runat="server" AutoGenerateColumns="false" DataSource='<%# Eval("Territories") %>' CssClass="zeroMarginTop">
                             <Columns>
                                 <asp:BoundField DataField="TerritoryDescription" HeaderText="Territory" />
                                 <asp:TemplateField HeaderText="Region">
