@@ -4,5 +4,11 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
+    <p>TODO: Write a good summary and create links to demo pages.</p>
+    <ul>
+        <li><a href="HumanResources/Default.aspx">Human Resources</a></li>
+        <li></li>
+    </ul>
+   
 </asp:Content>
 

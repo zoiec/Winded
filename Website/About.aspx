@@ -53,13 +53,22 @@
             <li><asp:CheckBox ID="CheckBox2" runat="server" Enabled="false" Checked="true" />
                 Display images from byte[] in database
             </li>
+            <li><asp:CheckBox ID="CheckBox4" runat="server" Enabled="false" Checked="false" />
+                Insert using EF
+            </li>
+            <li><asp:CheckBox ID="CheckBox5" runat="server" Enabled="false" Checked="false" />
+                Update using EF
+            </li>
+            <li><asp:CheckBox ID="CheckBox6" runat="server" Enabled="false" Checked="false" />
+                Delete using EF
+            </li>
             <li><asp:CheckBox ID="CheckBox3" runat="server" Enabled="false" Checked="false" />
                 Transactional processing in class library using Linq
             </li>
-            <li><asp:CheckBox ID="CheckBox4" runat="server" Enabled="false" Checked="false" />
+            <li><asp:CheckBox ID="CheckBox7" runat="server" Enabled="false" Checked="false" />
                 TBA
             </li>
-            <li><asp:CheckBox ID="CheckBox5" runat="server" Enabled="false" Checked="false" />
+            <li><asp:CheckBox ID="CheckBox8" runat="server" Enabled="false" Checked="false" />
                 TBA
             </li>
         </ul>
