@@ -8,7 +8,7 @@
                 <h2>Northwind Traders &amp; Entity Framework</h2>
             </hgroup>
             <p>
-                The Entity Framework auto-generates a central DAL class and various Entity and other classes to represent database tables and result sets from stored procedures. The Entity classes are essentially object graphs &mdash; classes composed of other Entities and collections of entities. The relationships between tables in the database are represented through the composition of the Entity classes.
+                The Entity Framework auto-generates a central DAL class and various Entity and other classes to represent database tables and result sets from stored procedures. Entity classes are essentially object graphs &mdash; classes composed of other Entities and collections of entities. The relationships between tables in the database are represented through the composition of the Entity classes.
             </p>
         </div>
     </section>

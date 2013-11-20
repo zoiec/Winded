@@ -1,5 +1,8 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
 
+<%@ Register Src="~/Controls/FeaturedContent.ascx" TagPrefix="my" TagName="FeaturedContent" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
@@ -71,7 +74,9 @@
         </div>
     </header>
     <div id="body">
-        <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
+        <asp:ContentPlaceHolder runat="server" ID="FeaturedContent">
+            <my:FeaturedContent runat="server" id="FeaturedContent1" />
+        </asp:ContentPlaceHolder>
         <section class="content-wrapper main-content clear-fix">
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />
         </section>
