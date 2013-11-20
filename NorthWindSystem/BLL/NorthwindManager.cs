@@ -11,12 +11,41 @@ namespace NorthWindSystem.BLL
     [DataObject]
     public class NorthwindManager
     {
+        #region Sales
+        #region Command Methods
+        #endregion
 
+        #region Query Methods
         [DataObjectMethod(DataObjectMethodType.Select, true)]
         public List<NorthwindSystem.DataModels.Sales.Customer> GetCustomers()
         {
             var dbContext = new NorthwindSystem.DataModels.Sales.NorthwindSales();
             return dbContext.Customers.ToList();
+        }
+        #endregion
+        #endregion
+
+
+        #region Human Resources
+        #region Command Methods
+        #endregion
+
+        #region Query Methods
+        public List<NorthwindSystem.DataModels.HumanResources.Region> GetRegions()
+        {
+            using (var dbContext = new NorthwindSystem.DataModels.HumanResources.NorthwindHumanResources())
+            {
+                var regions = dbContext.Regions
+                                       .Include(item => item.Territories)
+                                       .OrderBy(item => item.RegionDescription);
+
+                foreach (var region in regions)
+                {
+                    // TODO: See why the sorting of the Territories isn't working right....
+                    region.Territories.OrderBy(item => item.TerritoryDescription);
+                }
+                return regions.ToList();
+            }
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
@@ -49,5 +78,7 @@ namespace NorthWindSystem.BLL
             }
             return review;
         }
+        #endregion
+        #endregion
     }
 }
