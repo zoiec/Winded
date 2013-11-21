@@ -59,6 +59,36 @@ namespace NorthWindSystem.BLL
                 return region.RegionID;
             }
         }
+
+        public void Update(HR.Region region)
+        {
+            if (region == null)
+                throw new ArgumentNullException("region", "region is null.");
+            using (var dbContext = new HR.NorthwindHumanResources())
+            {
+                /* NOTE:
+                 *  Pre-process the Territory IDs to see if they should be "synced" with the name/description.
+                 *  This will be the case if, in the original, the ID was the same as the description
+                 */
+                // BUG: Known bug - this "cleaning" isn't working:
+                //      An object with the same key already exists in the ObjectStateManager. The ObjectStateManager cannot track multiple objects with the same key.
+                var territories = from item in region.Territories
+                                  join existing in dbContext.Territories
+                                    on item.TerritoryID equals existing.TerritoryID
+                                  where existing.TerritoryID.Equals(existing.TerritoryDescription)
+                                  select item;
+                foreach (var item in territories)
+                {
+                    // remove the item, since it's PK will be changing, and that implies a delete/insert, not an update
+                    var found = dbContext.Territories.Find(item.TerritoryID);
+                    dbContext.Territories.Remove(found);
+                    item.TerritoryID = item.TerritoryDescription;
+                }
+                dbContext.Regions.Attach(region);
+
+                dbContext.SaveChanges();
+            }
+        }
         #endregion
 
         #region Query Methods

@@ -40,6 +40,8 @@ public partial class HumanResources_EditSalesAreas : System.Web.UI.Page
 
         try
         {
+            string regionDescription = String.Empty;
+            Region region = null;
             switch (e.CommandName)
             {
                 case "Cancel":
@@ -55,24 +57,39 @@ public partial class HumanResources_EditSalesAreas : System.Web.UI.Page
                     RegionListView.InsertItemPosition = InsertItemPosition.None;
                     break;
                 case "Insert":
-                    // TODO: Handle insert
-                    TextBox regionBox = dataItem.FindControl("RegionDescription") as TextBox;
-                    TextBox territoriesBox = dataItem.FindControl("TerritoryDescriptions") as TextBox;
-                    Region region = new Region()
-                    {
-                        RegionDescription = regionBox.Text.Trim(),
-                        Territories = new List<Territory>()
-                    };
-                    var territories = territoriesBox.Text.Split(',');
+                    #region Insert Region and Territories
+                    regionDescription = (dataItem.FindControl("RegionDescription") as TextBox).Text.Trim();
+                    string territoryDescriptions = (dataItem.FindControl("TerritoryDescriptions") as TextBox).Text;
+                    region = new Region() { RegionDescription = regionDescription, Territories = new List<Territory>() };
+                    var territories = territoryDescriptions.Split(',');
                     foreach (var territory in territories)
                     {
                         region.Territories.Add(new Territory() { TerritoryDescription = territory.Trim() });
                     }
                     int regionId = controller.Add(region);
                     MessageLabel.Text = "New region added (id: " + regionId + ").";
+                    #endregion
+
+                    RegionListView.EditIndex = -1;
                     break;
                 case "Update":
-                    // TODO: Handle update
+                    region = new Region()
+                    {
+                        RegionID = int.Parse((dataItem.FindControl("RegionID") as HiddenField).Value),
+                        RegionDescription = (dataItem.FindControl("RegionDescription") as TextBox).Text.Trim(),
+                        Territories = new List<Territory>()
+                    };
+                    Repeater territoryRepeater = dataItem.FindControl("TerritoryRepeater") as Repeater;
+                    foreach (RepeaterItem item in territoryRepeater.Items)
+                    {
+                        region.Territories.Add(new Territory()
+                        {
+                            TerritoryID = (item.FindControl("TerritoryID") as HiddenField).Value,
+                            TerritoryDescription = (item.FindControl("TerritoryDescription") as TextBox).Text.Trim()
+                        });
+                    }
+                    controller.Update(region);
+
                     RegionListView.EditIndex = -1;
                     RegionListView.InsertItemPosition = InsertItemPosition.FirstItem;
                     break;

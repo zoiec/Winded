@@ -47,7 +47,9 @@
     <asp:ListView ID="RegionListView" runat="server" OnItemCommand="RegionListView_ItemCommand"
         InsertItemPosition="FirstItem">
         <LayoutTemplate>
-            <div id="itemPlaceholder" runat="server"></div>
+            <div>
+                <div id="itemPlaceholder" runat="server"></div>
+            </div>
         </LayoutTemplate>
         <ItemSeparatorTemplate>
             <hr />
@@ -85,11 +87,6 @@
                 Enter a name for the region and enter the region's territories as a comma-separated list.For example:<br />
                 <b>Region Name/Description:</b> <em>Canada</em><br />
                 <b>Territory Names/Descriptions:</b> <em>Edmonton, Regina, Ontario</em>
-
-                 <%--<asp:Label ID="Label3" runat="server" AssociatedControlID="IgnoreDescription">Region Name/Description:</asp:Label>
-                <asp:TextBox id="IgnoreDescription" runat="server" Enabled="false" Text="Canada" />
-                <asp:Label ID="Label4" runat="server" AssociatedControlID="IgnoreDescriptions">Territory Name/Description:</asp:Label>
-                <asp:TextBox id="IgnoreDescriptions" runat="server" TextMode="MultiLine" Enabled="false" Text="Edmonton, Regina, Ontario"/>--%>
             </div>
             <asp:Label ID="Label1" runat="server" AssociatedControlID="RegionDescription">Region Name/Description:</asp:Label>
             <asp:TextBox id="RegionDescription" runat="server" />
