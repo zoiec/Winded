@@ -5,6 +5,7 @@ using System.Linq;
 using System.Data.Entity; // For use of .Include() extension method
 using System.Text;
 using System.Threading.Tasks;
+using HR = NorthwindSystem.DataModels.HumanResources;
 
 namespace NorthWindSystem.BLL
 {
@@ -28,12 +29,42 @@ namespace NorthWindSystem.BLL
 
         #region Human Resources
         #region Command Methods
+        public int Add(HR.Region region)
+        {
+            if (region == null)
+                throw new ArgumentNullException("region", "region is null.");
+            using (var dbContext = new HR.NorthwindHumanResources())
+            {
+                /* NOTE:
+                 *  The TerritoryID column in Territories is a string - nvarchar(20) - rather than an integer.
+                 *  The existing data in Northwind Traders uses the zip code of the city/town as the TerritoryID.
+                 *  This sample just "simplifies" and assigns the territory description as the ID, since we're
+                 *  in Canada and we aren't using a single zip or postal code.
+                 */
+                foreach (var territory in region.Territories)
+                    if (string.IsNullOrEmpty(territory.TerritoryID))
+                        territory.TerritoryID = territory.TerritoryDescription;
+
+                /* NOTE:
+                 *  The RegionID column in Regions is an integer, but it is not an IDENTITY column.
+                 *  As such, we're simply going to get the next highest ID available.
+                 */
+                if(region.RegionID <= 0)
+                    region.RegionID = dbContext.Regions.Max(item => item.RegionID) + 1;
+
+                dbContext.Regions.Add(region);
+
+                dbContext.SaveChanges();
+
+                return region.RegionID;
+            }
+        }
         #endregion
 
         #region Query Methods
-        public List<NorthwindSystem.DataModels.HumanResources.Region> GetRegions()
+        public List<HR.Region> GetRegions()
         {
-            using (var dbContext = new NorthwindSystem.DataModels.HumanResources.NorthwindHumanResources())
+            using (var dbContext = new HR.NorthwindHumanResources())
             {
                 var regions = dbContext.Regions
                                        .Include(item => item.Territories)
@@ -49,10 +80,10 @@ namespace NorthWindSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<NorthwindSystem.DataModels.HumanResources.Employee> GetEmployees()
+        public List<HR.Employee> GetEmployees()
         {
-            var dbContext = new NorthwindSystem.DataModels.HumanResources.NorthwindHumanResources();
-            List<NorthwindSystem.DataModels.HumanResources.Employee> employees = dbContext.Employees.ToList();
+            var dbContext = new HR.NorthwindHumanResources();
+            List<HR.Employee> employees = dbContext.Employees.ToList();
             return employees;
         }
 

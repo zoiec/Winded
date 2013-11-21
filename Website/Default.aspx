@@ -7,7 +7,7 @@
     <p>TODO: Write a good summary and create links to demo pages.</p>
     <ul>
         <li><a href="HumanResources/Default.aspx">Human Resources</a></li>
-        <li></li>
+        <li><a href="HumanResources/EditSalesAreas.aspx">Edit Sales Areas</a></li>
     </ul>
    
 </asp:Content>
