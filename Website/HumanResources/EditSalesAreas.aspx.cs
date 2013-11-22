@@ -76,19 +76,23 @@ public partial class HumanResources_EditSalesAreas : System.Web.UI.Page
                     region = new Region()
                     {
                         RegionID = int.Parse((dataItem.FindControl("RegionID") as HiddenField).Value),
-                        RegionDescription = (dataItem.FindControl("RegionDescription") as TextBox).Text.Trim(),
-                        Territories = new List<Territory>()
+                        RegionDescription = (dataItem.FindControl("RegionDescription") as TextBox).Text.Trim()
                     };
                     Repeater territoryRepeater = dataItem.FindControl("TerritoryRepeater") as Repeater;
+                    var territoryList = new List<Territory>();
                     foreach (RepeaterItem item in territoryRepeater.Items)
                     {
-                        region.Territories.Add(new Territory()
+                        territoryList.Add(new Territory()
                         {
                             TerritoryID = (item.FindControl("TerritoryID") as HiddenField).Value,
-                            TerritoryDescription = (item.FindControl("TerritoryDescription") as TextBox).Text.Trim()
+                            TerritoryDescription = (item.FindControl("TerritoryDescription") as TextBox).Text.Trim(),
+                            RegionID = region.RegionID,
+                            Region = region
                         });
                     }
-                    controller.Update(region);
+                    controller.Update(region, territoryList);
+
+                    MessageLabel.Text = "Region updated.";
 
                     RegionListView.EditIndex = -1;
                     RegionListView.InsertItemPosition = InsertItemPosition.FirstItem;

@@ -60,32 +60,39 @@ namespace NorthWindSystem.BLL
             }
         }
 
-        public void Update(HR.Region region)
+        public void Update(NorthwindSystem.DataModels.HumanResources.Region region, List<NorthwindSystem.DataModels.HumanResources.Territory> territories)
         {
             if (region == null)
                 throw new ArgumentNullException("region", "region is null.");
+            if (territories == null)
+                throw new ArgumentNullException("territories", "territories is null.");
+
             using (var dbContext = new HR.NorthwindHumanResources())
             {
-                /* NOTE:
-                 *  Pre-process the Territory IDs to see if they should be "synced" with the name/description.
-                 *  This will be the case if, in the original, the ID was the same as the description
-                 */
-                // BUG: Known bug - this "cleaning" isn't working:
-                //      An object with the same key already exists in the ObjectStateManager. The ObjectStateManager cannot track multiple objects with the same key.
-                var territories = from item in region.Territories
-                                  join existing in dbContext.Territories
-                                    on item.TerritoryID equals existing.TerritoryID
-                                  where existing.TerritoryID.Equals(existing.TerritoryDescription)
-                                  select item;
                 foreach (var item in territories)
                 {
-                    // remove the item, since it's PK will be changing, and that implies a delete/insert, not an update
                     var found = dbContext.Territories.Find(item.TerritoryID);
-                    dbContext.Territories.Remove(found);
-                    item.TerritoryID = item.TerritoryDescription;
+                    if (found != null)
+                    {
+                        /* NOTE:
+                         *  Pre-process the Territory IDs to see if they should be "synced" with the name/description.
+                         *  This will be the case if, in the original, the ID was the same as the description
+                         */
+                        string foundTerritoryID = found.TerritoryID;
+                        string foundTerritoryDescription = found.TerritoryDescription.Trim(); // HACK: Turns out, the column is nchar(50), not an nvarchar....
+                        string itemTerritoryID = item.TerritoryID;
+                        string itemTerritoryDescription = item.TerritoryDescription.Trim();
+                        if (foundTerritoryID.Equals(foundTerritoryDescription) &&
+                            !itemTerritoryID.Equals(itemTerritoryDescription))
+                        {
+                            item.TerritoryID = itemTerritoryDescription;
+                            dbContext.Territories.Remove(found); // Because the PK has changed...
+                            dbContext.Territories.Add(item); // Because the PK has changed...
+                        }
+                    }
                 }
-                dbContext.Regions.Attach(region);
 
+                dbContext.Entry(region).State = System.Data.EntityState.Modified;
                 dbContext.SaveChanges();
             }
         }
