@@ -6,6 +6,7 @@ using System.Data.Entity; // For use of .Include() extension method
 using System.Text;
 using System.Threading.Tasks;
 using HR = NorthwindSystem.DataModels.HumanResources;
+using NorthWindSystem.CBOs;
 
 namespace NorthWindSystem.BLL
 {
@@ -17,11 +18,64 @@ namespace NorthWindSystem.BLL
         #endregion
 
         #region Query Methods
-        [DataObjectMethod(DataObjectMethodType.Select, true)]
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<NorthwindSystem.DataModels.Sales.Customer> GetCustomers()
         {
             var dbContext = new NorthwindSystem.DataModels.Sales.NorthwindSales();
             return dbContext.Customers.ToList();
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<CustomerOrderSummary> GetCustomerOrderSummaries()
+        {
+            var dbContext = new NorthwindSystem.DataModels.Sales.NorthwindSales();
+            var data = (from purchase in dbContext.Orders
+                        where purchase.OrderDate.HasValue
+                        select new CustomerOrderSummary()
+                        {
+                            OrderDate = purchase.OrderDate.Value,
+                            Freight = purchase.Freight.GetValueOrDefault(),
+                            Subtotal = purchase.Order_Details.Sum(x => x.UnitPrice * x.Quantity),
+                            Discount = purchase.Order_Details.Sum(x => x.UnitPrice * x.Quantity * (decimal)x.Discount),
+                            Total = purchase.Order_Details.Sum(x => (x.UnitPrice * x.Quantity) -
+                                                                    (x.UnitPrice * x.Quantity * (decimal)x.Discount)),
+                            ItemCount = purchase.Order_Details.Count(),
+                            ItemQuantity = purchase.Order_Details.Sum(x => x.Quantity),
+                            AverageItemUnitPrice = purchase.Order_Details.Average(x => x.UnitPrice),
+                            CompanyName = purchase.Customer.CompanyName,
+                            ContactName = purchase.Customer.ContactName,
+                            ContactTitle = purchase.Customer.ContactTitle,
+                            CustomerId = purchase.CustomerID
+                        }).ToList();
+            return data;
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<ProductSaleSummary> GetProductSaleSummaries()
+        {
+            var dbContext = new NorthwindSystem.DataModels.Sales.NorthwindSales();
+            var dbInventoryContext = new NorthwindSystem.DataModels.Purchasing.NorthwindPurchasing();
+            var data = (from item in dbContext.Products
+                        select new ProductSaleSummary()
+                        {
+                            TotalSales = item.Order_Details.Sum(x => x.UnitPrice * x.Quantity),
+                            TotalDiscount = item.Order_Details.Sum(x => x.UnitPrice * x.Quantity * (decimal)x.Discount),
+                            SaleCount = item.Order_Details.Count(),
+                            SaleQuantity = item.Order_Details.Sum(x => x.Quantity),
+                            AverageUnitPrice = item.Order_Details.Average(x => x.UnitPrice),
+                            ProductName = item.ProductName,
+                            QuantityPerUnit = item.QuantityPerUnit,
+                            UnitsInStock = item.UnitsInStock.GetValueOrDefault(),
+                            UnitsOnOrder = item.UnitsOnOrder.GetValueOrDefault(),
+                            ReorderLevel = item.ReorderLevel.GetValueOrDefault(),
+                            Discontinued = item.Discontinued,
+                            CurrentUnitPrice = item.UnitPrice.GetValueOrDefault(),
+                            CategoryId = item.CategoryID.GetValueOrDefault(),
+                            CategoryName = item.CategoryID.HasValue?
+                                           dbInventoryContext.Categories.Find(item.CategoryID).CategoryName : null,
+                            ProductId = item.ProductID
+                        }).ToList();
+            return data;
         }
         #endregion
         #endregion
