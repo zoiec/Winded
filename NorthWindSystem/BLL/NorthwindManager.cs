@@ -25,6 +25,14 @@ namespace NorthWindSystem.BLL
             return dbContext.Customers.ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// Thanks to Matteo Tontini's bloq post "Linq To Entities:  Queryable.Sum returns Null on an empty list".
+        /// <see cref="http://ilmatte.wordpress.com/2012/12/20/queryable-sum-on-decimal-and-null-return-value-with-linq-to-entities/"/>
+        /// </remarks>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<CustomerOrderSummary> GetCustomerOrderSummaries()
         {
@@ -35,13 +43,14 @@ namespace NorthWindSystem.BLL
                         {
                             OrderDate = purchase.OrderDate.Value,
                             Freight = purchase.Freight.GetValueOrDefault(),
-                            Subtotal = purchase.Order_Details.Sum(x => x.UnitPrice * x.Quantity),
-                            Discount = purchase.Order_Details.Sum(x => x.UnitPrice * x.Quantity * (decimal)x.Discount),
-                            Total = purchase.Order_Details.Sum(x => (x.UnitPrice * x.Quantity) -
-                                                                    (x.UnitPrice * x.Quantity * (decimal)x.Discount)),
+                            Subtotal = purchase.Order_Details.Sum(x => (decimal?)(x.UnitPrice * x.Quantity)) ?? 0,
+// TODO: Fix this after the fix for GetProductSaleSummaries
+                            //Discount = purchase.Order_Details.Sum(x => x.UnitPrice * x.Quantity * (decimal)x.Discount),
+                            //Total = purchase.Order_Details.Sum(x => (x.UnitPrice * x.Quantity) -
+                            //                                        (x.UnitPrice * x.Quantity * (decimal)x.Discount)),
                             ItemCount = purchase.Order_Details.Count(),
-                            ItemQuantity = purchase.Order_Details.Sum(x => x.Quantity),
-                            AverageItemUnitPrice = purchase.Order_Details.Average(x => x.UnitPrice),
+                            ItemQuantity = purchase.Order_Details.Sum(x => (short?)x.Quantity) ?? 0,
+                            AverageItemUnitPrice = purchase.Order_Details.Average(x => (decimal?)x.UnitPrice) ?? 0,
                             CompanyName = purchase.Customer.CompanyName,
                             ContactName = purchase.Customer.ContactName,
                             ContactTitle = purchase.Customer.ContactTitle,
@@ -50,31 +59,100 @@ namespace NorthWindSystem.BLL
             return data;
         }
 
+        private class SimpleCategory
+        {
+            public int CategoryID { get; set; }
+            public string CategoryName { get; set; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// Thanks to Matteo Tontini's bloq post "Linq To Entities:  Queryable.Sum returns Null on an empty list".
+        /// <see cref="http://ilmatte.wordpress.com/2012/12/20/queryable-sum-on-decimal-and-null-return-value-with-linq-to-entities/"/>
+        /// </remarks>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<ProductSaleSummary> GetProductSaleSummaries()
         {
+            // NOTE: Casting to Decimal is not supported in LINQ to Entities queries, because the required precision and scale information cannot be inferred.
             var dbContext = new NorthwindSystem.DataModels.Sales.NorthwindSales();
-            var dbInventoryContext = new NorthwindSystem.DataModels.Purchasing.NorthwindPurchasing();
             var data = (from item in dbContext.Products
+                        where !item.Discontinued
                         select new ProductSaleSummary()
                         {
-                            TotalSales = item.Order_Details.Sum(x => x.UnitPrice * x.Quantity),
-                            TotalDiscount = item.Order_Details.Sum(x => x.UnitPrice * x.Quantity * (decimal)x.Discount),
+                            TotalSales = item.Order_Details.Sum(x => (decimal?)(x.UnitPrice * x.Quantity)) ?? 0,
+
+                            /* NOTE:
+                             *  Having a problem with casting float to decimal in L2E:
+                             *      "Casting to Decimal is not supported in LINQ to Entities queries, 
+                             *       because the required precision and scale information cannot be inferred."
+                             *  Cast is happening in the generated query, not in memory. It looks like I might have to
+                             *  create a function on the data model or something to handle this.
+                             *  
+                             *  BTW:
+                             *  It's necessary to calculate discounts applied on a row-by-row basis BEFORE doing a sum
+                             *  in order to get the correct amount.
+                             *  (e.g.:  You get a different calculation if you sum before multiplying:
+                             *          5 items X $ 10.00  = $ 50.00
+                             *        +
+                             *          2 items X $  0.50  = $  1.00
+                             *          ----------------------------
+                             *                             = $ 51.00    <== CORRECT answer
+                             *                             
+                             *     vs.
+                             *          5 items X $ 10.00
+                             *        +
+                             *          2 items X $  0.50
+                             *          ----------------------------
+                             *          7 items X $ 10.50   = $ 73.50   <== WRONG answer
+                             *  )
+                             */
+
+                            //TotalDiscount = (from detail in item.Order_Details
+                            //                 select new // anonymous type from DB
+                            //                 {
+                            //                     UnitPrice = detail.UnitPrice,
+                            //                     Quantity = detail.Quantity,
+                            //                     Discount = detail.Discount
+                            //                 }).AsEnumerable() // perform rest of work in memory
+                            //                 .Sum(x => x.UnitPrice * x.Quantity * (decimal)x.Discount),
+
+
+                            //TotalDiscount = item.Order_Details
+                            ////.Select<NorthwindSystem.DataModels.Sales.Order_Detail, decimal>(x => x.)
+                            //                .Sum(x => 
+                            //                          (decimal?)(x.UnitPrice * x.Quantity * (decimal)x.Discount)) ?? 0,
+                            //                          //(float?)x.Discount
+                            //                          //(decimal?)x.UnitPrice * (short?)x.Quantity * Convert.ToDecimal((float?)x.Discount)) ?? decimal.Zero, // 0M,
+
+
+
+
                             SaleCount = item.Order_Details.Count(),
-                            SaleQuantity = item.Order_Details.Sum(x => x.Quantity),
-                            AverageUnitPrice = item.Order_Details.Average(x => x.UnitPrice),
+                            SaleQuantity = item.Order_Details.Sum(x => (short?)x.Quantity) ?? 0,
+                            AverageUnitPrice = item.Order_Details.Average(x => (decimal?)x.UnitPrice) ?? 0,
                             ProductName = item.ProductName,
                             QuantityPerUnit = item.QuantityPerUnit,
-                            UnitsInStock = item.UnitsInStock.GetValueOrDefault(),
-                            UnitsOnOrder = item.UnitsOnOrder.GetValueOrDefault(),
-                            ReorderLevel = item.ReorderLevel.GetValueOrDefault(),
+                            UnitsInStock = item.UnitsInStock.HasValue ?
+                                           item.UnitsInStock.Value : (short)0,
+                            UnitsOnOrder = item.UnitsOnOrder.HasValue ?
+                                           item.UnitsOnOrder.Value : (short)0,
+                            ReorderLevel = item.ReorderLevel.HasValue ?
+                                           item.ReorderLevel.Value : (short)0,
                             Discontinued = item.Discontinued,
-                            CurrentUnitPrice = item.UnitPrice.GetValueOrDefault(),
-                            CategoryId = item.CategoryID.GetValueOrDefault(),
-                            CategoryName = item.CategoryID.HasValue?
-                                           dbInventoryContext.Categories.Find(item.CategoryID).CategoryName : null,
+                            CurrentUnitPrice = item.UnitPrice.HasValue ?
+                                           item.UnitPrice.Value : 0,
+                            CategoryId = item.CategoryID.HasValue ?
+                                           item.CategoryID.Value : 0,
                             ProductId = item.ProductID
                         }).ToList();
+
+            var dbInventoryContext = new NorthwindSystem.DataModels.Purchasing.NorthwindPurchasing();
+            foreach (var item in data)
+                if (item.CategoryId > 0)
+                    item.CategoryName = dbInventoryContext.Categories.Find(item.CategoryId).CategoryName;
             return data;
         }
         #endregion
