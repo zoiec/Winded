@@ -120,12 +120,13 @@ namespace NorthWindSystem.BLL
                             //                 .Sum(x => x.UnitPrice * x.Quantity * (decimal)x.Discount),
 
 
-                            //TotalDiscount = item.Order_Details
-                            ////.Select<NorthwindSystem.DataModels.Sales.Order_Detail, decimal>(x => x.)
-                            //                .Sum(x => 
-                            //                          (decimal?)(x.UnitPrice * x.Quantity * (decimal)x.Discount)) ?? 0,
-                            //                          //(float?)x.Discount
-                            //                          //(decimal?)x.UnitPrice * (short?)x.Quantity * Convert.ToDecimal((float?)x.Discount)) ?? decimal.Zero, // 0M,
+                            TotalDiscount = item.Order_Details
+                                //.Select<NorthwindSystem.DataModels.Sales.Order_Detail, decimal>(x => x.)
+                                            .Sum(x =>
+                               (decimal?)(x.UnitPrice * x.Quantity * (((decimal)((int)(x.Discount * 100))) / 100))) ?? 0,
+                            //(decimal?)(x.UnitPrice * x.Quantity * (decimal)x.Discount)) ?? 0,
+                            //(float?)x.Discount
+                            //(decimal?)x.UnitPrice * (short?)x.Quantity * Convert.ToDecimal((float?)x.Discount)) ?? decimal.Zero, // 0M,
 
 
 
